@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(Void... voids) {
             try {
-                URL url = new URL("http://ssfb.ngknn.local/NGKNN/%D0%A7%D0%B5%D1%82%D0%B2%D0%B5%D1%80%D0%B8%D0%BA%D0%BE%D0%B2%D0%9F%D0%B2/");
+                URL url = new URL("https://ngknn.ru:5101/NGKNN/%D0%A7%D0%B5%D1%82%D0%B2%D0%B5%D1%80%D0%B8%D0%BA%D0%BE%D0%B2%D0%9F%D0%B2/");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 for (int i = 0; i < tempArray.length(); i++){
                     JSONObject profileJson = tempArray.getJSONObject(i);
                     Profile tempProfile = new Profile(
-                            profileJson.getInt("Id"),
+                            profileJson.getString("Id"),
                             profileJson.getString("Name"),
                             profileJson.getString("Job"),
                             profileJson.getString("Image")
