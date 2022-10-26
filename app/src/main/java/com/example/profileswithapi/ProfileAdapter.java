@@ -3,7 +3,6 @@ package com.example.profileswithapi;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.icu.text.CaseMap;
 import android.util.Base64;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,10 +59,8 @@ public class ProfileAdapter extends BaseAdapter {
         name.setText(profile.getName());
         job.setText(profile.getJob());
         email.setText(profile.getEmail());
-        if (profile.getId() != 4){ int c = 10;}
-        else{ int a = 5;}
 //        image.setImageBitmap(getUserImage(profile.getImage()));
 
-        return null;
+        return v;
     }
 }

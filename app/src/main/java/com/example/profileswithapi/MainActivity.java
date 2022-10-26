@@ -1,11 +1,11 @@
 package com.example.profileswithapi;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.ListView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(Void... voids) {
             try {
-                URL url = new URL("https://ssfb.ngknn.local/ngknn/%D0%A7%D0%B5%D1%82%D0%B2%D0%B5%D1%80%D0%B8%D0%BA%D0%BE%D0%B2%D0%9F%D0%92");
+                URL url = new URL("https://ssfb.ngknn.local/NGKNN/ЧетвериковПв/api/Personal_Inf");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
