@@ -5,15 +5,46 @@ import android.os.Parcelable;
 
 public class Profile implements Parcelable {
     private int Id;
-    private String Name;
-    private String Job;
-    private String Image;
+    private final String Name;
+    private final String Job;
+    private final String Email;
+    private final String Image;
 
+    public String getEmail() {
+        return Email;
+    }
+
+    public int getId() {
+        return Id;
+    }
+    public String getName() {
+        return Name;
+    }
+
+    public String getJob() {
+        return Job;
+    }
+
+    public String getImage() {
+        return Image;
+    }
+    public void setId(int id) {
+        Id = id;
+    }
     protected Profile(Parcel in) {
         Id = in.readInt();
         Name = in.readString();
         Job = in.readString();
+        Email = in.readString();
         Image = in.readString();
+    }
+
+    public Profile(int id, String name, String job, String email, String image) {
+        this.Id = id;
+        this.Name = name;
+        this.Job = job;
+        this.Email = email;
+        this.Image = image;
     }
 
     @Override
@@ -21,6 +52,7 @@ public class Profile implements Parcelable {
         dest.writeInt(Id);
         dest.writeString(Name);
         dest.writeString(Job);
+        dest.writeString(Email);
         dest.writeString(Image);
     }
 
@@ -40,12 +72,4 @@ public class Profile implements Parcelable {
             return new Profile[size];
         }
     };
-
-    public int getId() {
-        return Id;
-    }
-
-    public void setId(int id) {
-        Id = id;
-    }
 }

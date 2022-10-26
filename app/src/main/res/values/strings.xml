@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ProfilesWithApi</string>
+    <string name="avatar">avatar</string>
 </resources>

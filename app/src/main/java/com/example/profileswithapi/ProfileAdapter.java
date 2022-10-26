@@ -1,113 +1,69 @@
 package com.example.profileswithapi;
 
 import android.content.Context;
-import android.view.LayoutInflater;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.icu.text.CaseMap;
+import android.util.Base64;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class ProfileAdapter extends BaseAdapter implements Filterable {
-    LayoutInflater inflater;
-    private ArrayList<Profile> mOriginalValues;
-    private ArrayList<Profile> mDisplayedValues;
+public class ProfileAdapter extends BaseAdapter {
+    private final Context mContext;
+    List<Profile> profiles;
 
-    public ProfileAdapter(Context context, ArrayList<Profile> profiles) {
-        this.mOriginalValues = profiles;
-        this.mDisplayedValues = profiles;
-        inflater = LayoutInflater.from(context);
+    public ProfileAdapter(Context mContext, List<Profile> profileList) {
+        this.mContext = mContext;
+        this.profiles = profileList;
     }
 
     @Override
     public int getCount() {
-        return mDisplayedValues.size();
+        return 0;
     }
 
     @Override
     public Object getItem(int i) {
-        return i;
+        return null;
     }
 
     @Override
     public long getItemId(int i) {
-        return i;
+        return 0;
     }
 
-    private static class ViewHolder {
-        RelativeLayout rlContainer;
-        TextView tvName, tvJob, tvEmail;
-        ImageView ivAvatar;
-    }
-
-    @Override
-    public View getView(int i, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-        if (convertView == null) {
-            holder = new ViewHolder();
-            convertView = inflater.inflate(R.layout.sample_item, null);
-            holder.rlContainer = convertView.findViewById(R.id.rlContainer);
-            holder.tvName = convertView.findViewById(R.id.Name);
-            holder.tvJob = convertView.findViewById(R.id.Job);
-            holder.tvEmail = convertView.findViewById(R.id.Email);
-            holder.ivAvatar = convertView.findViewById(R.id.list_itemAvatar);
-            convertView.setTag(holder);
+    private Bitmap getUserImage(String encodeImage) {
+        if (encodeImage != null && !encodeImage.equals("null")) {
+            byte[] bytes = Base64.decode(encodeImage, Base64.DEFAULT);
+            return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
         } else {
-            holder = (ViewHolder) convertView.getTag();
+            return null;
         }
-
-        holder.tvName.setText(mDisplayedValues.get(i).name);
-        holder.tvJob.setText(mDisplayedValues.get(i).job);
-        holder.tvEmail.setText(mDisplayedValues.get(i).email);
-        holder.ivAvatar.setImageBitmap(mDisplayedValues.get(i).image);
-
-        return convertView;
     }
 
     @Override
-    public Filter getFilter() {
-        return new Filter() {
+    public View getView(int i, View view, ViewGroup viewGroup) {
+        View v = View.inflate(mContext, R.layout.sample_item, null);
 
-            @SuppressWarnings("unchecked")
-            @Override
-            protected void publishResults(CharSequence constraint, FilterResults results) {
+        TextView name = v.findViewById(R.id.Name);
+        TextView job = v.findViewById(R.id.Job);
+        TextView email = v.findViewById(R.id.Email);
+        ImageView image = v.findViewById(R.id.Avatar);
 
-                mDisplayedValues = (ArrayList<Profile>) results.values;
-                notifyDataSetChanged();
-            }
+        Profile profile = profiles.get(i);
 
-            @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-                FilterResults results = new FilterResults();
-                ArrayList<Profile> FilteredArrList = new ArrayList<>();
+        name.setText(profile.getName());
+        job.setText(profile.getJob());
+        email.setText(profile.getEmail());
+        if (profile.getId() != 4){ int c = 10;}
+        else{ int a = 5;}
+//        image.setImageBitmap(getUserImage(profile.getImage()));
 
-                if (mOriginalValues == null) {
-                    mOriginalValues = new ArrayList<>(mDisplayedValues);
-                }
-
-                if (constraint == null || constraint.length() == 0) {
-
-                    // set the Original result to return
-                    results.count = mOriginalValues.size();
-                    results.values = mOriginalValues;
-                } else {
-                    constraint = constraint.toString().toLowerCase();
-                    for (int i = 0; i < mOriginalValues.size(); i++) {
-                        String data = mOriginalValues.get(i).name;
-                        if (data.toLowerCase().startsWith(constraint.toString())) {
-                            FilteredArrList.add(new Profile(mOriginalValues.get(i).name, mOriginalValues.get(i).job, mOriginalValues.get(i).email, mOriginalValues.get(i).image));
-                        }
-                    }
-                    results.count = FilteredArrList.size();
-                    results.values = FilteredArrList;
-                }
-                return results;
-            }
-        };
+        return null;
     }
 }

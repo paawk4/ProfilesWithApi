@@ -26,10 +26,11 @@
             app:cardCornerRadius="15dp">
 
             <ImageView
-                android:id="@+id/list_itemAvatar"
+                android:id="@+id/Avatar"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
-                tools:ignore="ImageContrastCheck" />
+                tools:ignore="ImageContrastCheck"
+                android:contentDescription="@string/avatar" />
         </androidx.cardview.widget.CardView>
 
 
