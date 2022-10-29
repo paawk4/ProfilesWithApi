@@ -1,6 +1,5 @@
 package com.example.profileswithapi;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.ListView;
@@ -25,25 +24,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         ListView lvProfiles = findViewById(R.id.lvDatabase);
-        profileAdapter = new ProfileAdapter((Context) MainActivity.this, (ArrayList<Profile>) listProfiles);
+        profileAdapter = new ProfileAdapter(MainActivity.this, listProfiles);
         lvProfiles.setAdapter(profileAdapter);
-
         new GetProfiles().execute();
     }
 
-    private class GetProfiles extends AsyncTask<Void, Void, String> {
+    private class GetProfiles extends AsyncTask<Void, Void, String>{
 
         @Override
         protected String doInBackground(Void... voids) {
             try {
-                URL url = new URL("https://ssfb.ngknn.local/NGKNN/ЧетвериковПв/api/Personal_Inf");
+                URL url = new URL("https://ngknn.ru:5101/NGKNN/ЧетвериковПв/Api/Personal_inf");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 StringBuilder result = new StringBuilder();
-                String line;
+                String line = "";
 
                 while ((line = reader.readLine()) != null){
                     result.append(line);
@@ -69,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                             profileJson.getString("Image")
                     );
                     listProfiles.add(tempProfile);
-                    profileAdapter.notifyDataSetChanged();
+                    profileAdapter.notifyDataSetInvalidated();
                 }
             } catch (Exception ignored){
 

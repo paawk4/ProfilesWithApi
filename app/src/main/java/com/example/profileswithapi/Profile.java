@@ -5,32 +5,19 @@ import android.os.Parcelable;
 
 public class Profile implements Parcelable {
     private int Id;
-    private final String Name;
-    private final String Job;
-    private final String Email;
-    private final String Image;
+    private String Name;
+    private String Job;
+    private String Email;
+    private String Image;
 
-    public String getEmail() {
-        return Email;
-    }
-
-    public int getId() {
-        return Id;
-    }
-    public String getName() {
-        return Name;
+    public Profile(int id, String name, String job, String email, String image) {
+        this.Id = id;
+        Name = name;
+        Job = job;
+        Email = email;
+        Image = image;
     }
 
-    public String getJob() {
-        return Job;
-    }
-
-    public String getImage() {
-        return Image;
-    }
-    public void setId(int id) {
-        Id = id;
-    }
     protected Profile(Parcel in) {
         Id = in.readInt();
         Name = in.readString();
@@ -39,12 +26,41 @@ public class Profile implements Parcelable {
         Image = in.readString();
     }
 
-    public Profile(int id, String name, String job, String email, String image) {
+    public static final Creator<Profile> CREATOR = new Creator<Profile>() {
+        @Override
+        public Profile createFromParcel(Parcel source) {
+            return new Profile(source);
+        }
+
+        @Override
+        public Profile[] newArray(int size) {
+            return new Profile[size];
+        }
+    };
+
+    public void setId(int id) {
         this.Id = id;
-        this.Name = name;
-        this.Job = job;
-        this.Email = email;
-        this.Image = image;
+    }
+
+    public void setName(String name) {
+        Name = name;
+    }
+
+    public void setJob(String job) {
+        Job = job;
+    }
+
+    public void setEmail(String email) {
+        Email = email;
+    }
+
+    public void setImage(String image) {
+        Image = image;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     @Override
@@ -56,20 +72,25 @@ public class Profile implements Parcelable {
         dest.writeString(Image);
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public String getEmail() {
+        return Email;
     }
 
-    public static final Creator<Profile> CREATOR = new Creator<Profile>() {
-        @Override
-        public Profile createFromParcel(Parcel in) {
-            return new Profile(in);
-        }
+    public int getId() {
+        return Id;
+    }
 
-        @Override
-        public Profile[] newArray(int size) {
-            return new Profile[size];
-        }
-    };
+    public String getName() {
+        return Name;
+    }
+
+    public String getJob() {
+        return Job;
+    }
+
+    public String getImage() {
+        return Image;
+    }
+
+
 }

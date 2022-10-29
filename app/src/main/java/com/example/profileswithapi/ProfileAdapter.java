@@ -23,17 +23,17 @@ public class ProfileAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 0;
+        return profiles.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return null;
+        return profiles.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return profiles.get(i).getId();
     }
 
     private Bitmap getUserImage(String encodeImage) {
@@ -59,7 +59,7 @@ public class ProfileAdapter extends BaseAdapter {
         name.setText(profile.getName());
         job.setText(profile.getJob());
         email.setText(profile.getEmail());
-//        image.setImageBitmap(getUserImage(profile.getImage()));
+        image.setImageBitmap(getUserImage(profile.getImage()));
 
         return v;
     }
