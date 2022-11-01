@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/Header"
@@ -17,13 +16,14 @@
         tools:context=".MainActivity">
 
         <Button
-            android:id="@+id/btnViewCreate"
+            android:id="@+id/btnCreate"
             android:layout_width="45dp"
             android:layout_height="45dp"
+            app:icon="@drawable/ic_create_button"
             app:iconGravity="textStart"
             app:iconPadding="0dp"
             app:iconSize="30dp"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
             android:id="@+id/textView2"
@@ -41,10 +41,11 @@
             android:id="@+id/btnSearch"
             android:layout_width="48dp"
             android:layout_height="45dp"
+            app:icon="@drawable/ic_baseline_search_24"
             app:iconGravity="textStart"
             app:iconPadding="0dp"
             app:iconSize="30dp"
-            app:layout_constraintEnd_toStartOf="@+id/btnViewCreate">
+            app:layout_constraintEnd_toStartOf="@+id/btnCreate">
 
 
         </Button>

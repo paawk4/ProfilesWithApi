@@ -1,7 +1,9 @@
 package com.example.profileswithapi;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +26,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        fillListView();
+        btnListeners();
+    }
+
+    private void btnListeners() {
+        Button btnCreate = findViewById(R.id.btnCreate);
+        btnCreate.setOnClickListener(v -> {
+            Intent intent = new Intent(this, CreateAndEditProfileActivity.class);
+            this.startActivity(intent);
+        });
+    }
+
+    private void fillListView() {
         ListView lvProfiles = findViewById(R.id.lvDatabase);
         profileAdapter = new ProfileAdapter(MainActivity.this, listProfiles);
         lvProfiles.setAdapter(profileAdapter);

@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.CreateAndChangeItemFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/CreateAvatarLayout"
@@ -23,15 +22,13 @@
             app:layout_constraintHorizontal_bias="0.27"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ImageContrastCheck"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:srcCompat="@drawable/ic_launcher_foreground" />
 
         <Button
             android:id="@+id/btnAddImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-
+            app:icon="@drawable/ic_create_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.2"
@@ -110,8 +107,7 @@
             android:id="@+id/btnGoBack"
             android:layout_width="45dp"
             android:layout_height="45dp"
-
-
+            app:icon="@drawable/ic_btn_go_back"
             app:iconGravity="textStart"
             app:iconPadding="0dp"
             app:iconSize="27dp"
@@ -120,12 +116,13 @@
             tools:ignore="MissingConstraints,SpeakableTextPresentCheck,UsingOnClickInXml" />
 
         <Button
-            android:id="@+id/btnCreate"
+            android:id="@+id/btnCreateProfile"
             android:layout_width="45dp"
             android:layout_height="45dp"
 
             android:textColor="#FFFFFFFF"
 
+            app:icon="@drawable/ic_baseline_done_24"
             app:iconGravity="textStart"
             app:iconPadding="0dp"
             app:iconSize="30dp"
@@ -134,15 +131,13 @@
             tools:ignore="MissingConstraints,SpeakableTextPresentCheck,UsingOnClickInXml" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/windowTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            android:text="Adding a profile"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btnCreate"
+            app:layout_constraintEnd_toStartOf="@+id/btnCreateProfile"
             app:layout_constraintStart_toEndOf="@+id/btnGoBack"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
