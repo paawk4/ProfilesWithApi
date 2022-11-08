@@ -2,9 +2,11 @@ package com.example.profileswithapi;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +19,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.util.Arrays;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,6 +45,8 @@ public class CreateAndEditProfileActivity extends AppCompatActivity {
     private Button goBackBtn;
     private TextView windowTitle;
     private ProgressBar loadingPB;
+
+    private String stringImage;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -90,14 +101,13 @@ public class CreateAndEditProfileActivity extends AppCompatActivity {
     private void createProfile() {
         windowTitle.setText("Добавление профиля");
         btnCreateProfile.setOnClickListener(v -> {
-            if (nameET.getText().toString().isEmpty() && jobET.getText().toString().isEmpty()
-                    && emailET.getText().toString().isEmpty()) {
+            if (nameET.getText().toString().isEmpty() || jobET.getText().toString().isEmpty()
+                    || emailET.getText().toString().isEmpty()) {
                 Toast.makeText(this, "Введите значения", Toast.LENGTH_SHORT).show();
                 return;
             }
-            String image = getImageString();
             postData(nameET.getText().toString(), jobET.getText().toString(),
-                    emailET.getText().toString(), image;
+                    emailET.getText().toString(), stringImage);
             goBackIntent();
         });
 
@@ -110,16 +120,11 @@ public class CreateAndEditProfileActivity extends AppCompatActivity {
         });
     }
 
-    private String getImageString() {
-        Bitmap avatarMb = ((BitmapDrawable) avatarIV.getDrawable()).getBitmap();
-
-    }
-
     private void postData(String name, String job, String email, String image) {
         loadingPB.setVisibility(View.VISIBLE);
 
         Retrofit retrofit = new Retrofit.Builder().baseUrl
-                ("https://ngknn.ru:5001/NGKNN/ЧетвериковПв/Api/Personal_inf/")
+                        ("https://ngknn.ru:5001/NGKNN/ЧетвериковПв/Api/Personal_inf/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         RetrofitApi retrofitAPI = retrofit.create(RetrofitApi.class);
 
@@ -166,9 +171,18 @@ public class CreateAndEditProfileActivity extends AppCompatActivity {
                 Uri selectedImageUri = data.getData();
                 if (null != selectedImageUri) {
                     avatarIV.setImageURI(selectedImageUri);
-
+                    stringImage = getImageString();
                 }
             }
         }
+    }
+
+    private String getImageString()  {
+        BitmapDrawable bitmapDrawable = (BitmapDrawable) avatarIV.getDrawable();
+        Bitmap bitmap = bitmapDrawable.getBitmap();
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 30, byteArrayOutputStream);
+        byte[] bytes = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(bytes, Base64.DEFAULT);
     }
 }

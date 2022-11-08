@@ -13,6 +13,7 @@ import android.widget.TextView;
 import java.util.List;
 
 public class ProfileAdapter extends BaseAdapter {
+
     private final Context mContext;
     List<Profile> profiles;
 
