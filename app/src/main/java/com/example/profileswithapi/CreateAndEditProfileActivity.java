@@ -43,6 +43,7 @@ public class CreateAndEditProfileActivity extends AppCompatActivity {
     private Button btnCreateProfile;
     private Button btnUploadImage;
     private Button goBackBtn;
+    private Button btnDelete;
     private TextView windowTitle;
     private ProgressBar loadingPB;
 
@@ -66,6 +67,7 @@ public class CreateAndEditProfileActivity extends AppCompatActivity {
         avatarIV = findViewById(R.id.ivAvatar);
         goBackBtn = findViewById(R.id.btnGoBack);
         btnUploadImage = findViewById(R.id.btnAddImage);
+        btnDelete = findViewById(R.id.btnDelete);
     }
 
     public void createOrChange() {
@@ -77,29 +79,10 @@ public class CreateAndEditProfileActivity extends AppCompatActivity {
         }
     }
 
-    private void changeProfile() {
-        windowTitle.setText("Изменение профиля");
-
-        nameET.setText(MainActivity.nameText);
-        jobET.setText(MainActivity.jobText);
-        emailET.setText(MainActivity.emailText);
-
-        goBackBtn.setOnClickListener(v -> {
-            goBackIntent();
-        });
-        btnUploadImage.setOnClickListener(v -> {
-            imageChooser();
-        });
-    }
-
-    private void goBackIntent() {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        startActivity(intent);
-    }
-
     private void createProfile() {
         windowTitle.setText("Добавление профиля");
+        btnDelete.setVisibility(View.GONE);
+
         btnCreateProfile.setOnClickListener(v -> {
             if (nameET.getText().toString().isEmpty() || jobET.getText().toString().isEmpty()
                     || emailET.getText().toString().isEmpty()) {
@@ -121,8 +104,6 @@ public class CreateAndEditProfileActivity extends AppCompatActivity {
     }
 
     private void postData(String name, String job, String email, String image) {
-        loadingPB.setVisibility(View.VISIBLE);
-
         Retrofit retrofit = new Retrofit.Builder().baseUrl
                         ("https://ngknn.ru:5001/NGKNN/ЧетвериковПв/Api/Personal_inf/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
@@ -137,8 +118,6 @@ public class CreateAndEditProfileActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<Profile> call, @NonNull Response<Profile> response) {
                 Toast.makeText(CreateAndEditProfileActivity.this, "Данные добавлены",
                         Toast.LENGTH_SHORT).show();
-
-                loadingPB.setVisibility(View.GONE);
             }
 
             @Override
@@ -147,6 +126,64 @@ public class CreateAndEditProfileActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void changeProfile() {
+        windowTitle.setText("Изменение профиля");
+        btnDelete.setVisibility(View.VISIBLE);
+
+        nameET.setText(MainActivity.nameText);
+        jobET.setText(MainActivity.jobText);
+        emailET.setText(MainActivity.emailText);
+
+        btnCreateProfile.setOnClickListener(v -> {
+            if (nameET.getText().toString().isEmpty() || jobET.getText().toString().isEmpty()
+                    || emailET.getText().toString().isEmpty()) {
+                Toast.makeText(this, "Введите значения", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            putData(nameET.getText().toString(), jobET.getText().toString(), emailET.getText().toString(), stringImage);
+            goBackIntent();
+        });
+
+        goBackBtn.setOnClickListener(v -> {
+            goBackIntent();
+        });
+        btnUploadImage.setOnClickListener(v -> {
+            imageChooser();
+        });
+    }
+
+    private void putData(String name, String job, String email, String image) {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl
+                        ("https://ngknn.ru:5001/NGKNN/ЧетвериковПв/Api/Personal_inf/")
+                .addConverterFactory(GsonConverterFactory.create()).build();
+        RetrofitApi retrofitAPI = retrofit.create(RetrofitApi.class);
+
+        Profile modal = new Profile(name, job, email, image);
+
+        Call<Profile> call = retrofitAPI.updateData(modal);
+
+        call.enqueue(new Callback<Profile>() {
+            @Override
+            public void onResponse(@NonNull Call<Profile> call, @NonNull Response<Profile> response) {
+                Toast.makeText(CreateAndEditProfileActivity.this, "Data updated to API", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Profile> call, @NonNull Throwable t) {
+                Toast.makeText(CreateAndEditProfileActivity.this, t.getMessage(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+
+    private void goBackIntent() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
     }
 
     private void fillHints() {
@@ -177,7 +214,7 @@ public class CreateAndEditProfileActivity extends AppCompatActivity {
         }
     }
 
-    private String getImageString()  {
+    private String getImageString() {
         BitmapDrawable bitmapDrawable = (BitmapDrawable) avatarIV.getDrawable();
         Bitmap bitmap = bitmapDrawable.getBitmap();
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();

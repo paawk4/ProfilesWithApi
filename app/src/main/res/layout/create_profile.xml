@@ -114,14 +114,23 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:ignore="MissingConstraints,SpeakableTextPresentCheck,UsingOnClickInXml" />
-
+        <Button
+            android:id="@+id/btnDelete"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            app:icon="@drawable/ic_baseline_delete_24"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:iconSize="27dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@id/btnCreateProfile"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:ignore="MissingConstraints,SpeakableTextPresentCheck,UsingOnClickInXml" />
         <Button
             android:id="@+id/btnCreateProfile"
             android:layout_width="45dp"
             android:layout_height="45dp"
-
             android:textColor="#FFFFFFFF"
-
             app:icon="@drawable/ic_baseline_done_24"
             app:iconGravity="textStart"
             app:iconPadding="0dp"
