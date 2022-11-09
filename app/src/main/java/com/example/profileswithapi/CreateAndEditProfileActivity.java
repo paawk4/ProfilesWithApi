@@ -109,7 +109,7 @@ public class CreateAndEditProfileActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create()).build();
         RetrofitApi retrofitAPI = retrofit.create(RetrofitApi.class);
 
-        Profile modal = new Profile(name, job, email, image);
+        Profile modal = new Profile(0, name, job, email, image);
 
         Call<Profile> call = retrofitAPI.createPost(modal);
 
@@ -146,11 +146,38 @@ public class CreateAndEditProfileActivity extends AppCompatActivity {
             goBackIntent();
         });
 
+        btnDelete.setOnClickListener(v -> {
+            deleteData();
+            goBackIntent();
+        });
         goBackBtn.setOnClickListener(v -> {
             goBackIntent();
         });
         btnUploadImage.setOnClickListener(v -> {
             imageChooser();
+        });
+    }
+
+    private void deleteData() {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl
+                        ("https://ngknn.ru:5001/NGKNN/ЧетвериковПв/Api/Personal_inf/")
+                .addConverterFactory(GsonConverterFactory.create()).build();
+        RetrofitApi retrofitAPI = retrofit.create(RetrofitApi.class);
+
+
+        Call<Profile> call = retrofitAPI.deleteData(MainActivity.currentId);
+
+        call.enqueue(new Callback<Profile>() {
+            @Override
+            public void onResponse(@NonNull Call<Profile> call, @NonNull Response<Profile> response) {
+                Toast.makeText(CreateAndEditProfileActivity.this, "Data updated to API", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Profile> call, @NonNull Throwable t) {
+                Toast.makeText(CreateAndEditProfileActivity.this, t.getMessage(),
+                        Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
@@ -160,9 +187,9 @@ public class CreateAndEditProfileActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create()).build();
         RetrofitApi retrofitAPI = retrofit.create(RetrofitApi.class);
 
-        Profile modal = new Profile(name, job, email, image);
+        Profile modal = new Profile(MainActivity.currentId, name, job, email, image);
 
-        Call<Profile> call = retrofitAPI.updateData(modal);
+        Call<Profile> call = retrofitAPI.updateData(modal.getId(), modal);
 
         call.enqueue(new Callback<Profile>() {
             @Override

@@ -10,7 +10,8 @@ public class Profile implements Parcelable {
     private String Email;
     private String Image;
 
-    public Profile(String name, String job, String email, String image) {
+    public Profile(int id, String name, String job, String email, String image) {
+        Id = id;
         Name = name;
         Job = job;
         Email = email;

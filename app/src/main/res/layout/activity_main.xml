@@ -23,8 +23,18 @@
             app:iconGravity="textStart"
             app:iconPadding="0dp"
             app:iconSize="30dp"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="MissingConstraints" />
 
+        <Button
+            android:id="@+id/btnRefresh"
+            android:layout_width="48dp"
+            android:layout_height="45dp"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:icon = "@drawable/ic_baseline_refresh_24"
+            app:layout_constraintStart_toEndOf="@id/spinnerSort"
+            tools:ignore="MissingConstraints" />
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
@@ -45,7 +55,8 @@
             app:iconGravity="textStart"
             app:iconPadding="0dp"
             app:iconSize="30dp"
-            app:layout_constraintEnd_toStartOf="@+id/btnCreate">
+            app:layout_constraintEnd_toStartOf="@+id/btnCreate"
+            tools:ignore="MissingConstraints">
 
 
         </Button>
@@ -62,16 +73,18 @@
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints" />
 
         <Spinner
             android:id="@+id/spinnerSort"
-            style="@android:style/Widget.Material.Spinner"
-            android:layout_width="93dp"
+            android:layout_width="48dp"
             android:layout_height="45dp"
             android:keepScreenOn="false"
+            android:background="@drawable/spinner_bg"
             app:layout_constrainedWidth="false"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
